@@ -3,3 +3,5 @@
 
 
 void akinator(Node* nd, char* new_question);
+
+char* read_questions_from_file();

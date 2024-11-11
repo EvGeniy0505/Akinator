@@ -14,14 +14,21 @@ void akinator(Node* nd, char* new_question)
     }
     if(check_input_yes(user_answer))
     {
-        akinator(nd -> left);
+        akinator(nd -> left, read_questions_from_file());
         if(nd -> left == NULL)
            nd -> left = (Node*)Create_node(new_question);
     }
     else
     {
-        akinator(nd -> right);
+        akinator(nd -> right, read_questions_from_file());
         if(nd -> right == NULL)
            nd -> right = (Node*)Create_node(new_question);
     }
+}
+
+char* read_questions_from_file()
+{
+    FILE* fp = fopen("akinator.json", "rw");
+
+
 }

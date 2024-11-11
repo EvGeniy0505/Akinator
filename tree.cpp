@@ -5,7 +5,7 @@
 #include "tree.h"
 #include "user_answer.h"
 
-Node* Tree_ctor(char* first_question)
+Node* Tree_ctor(const char* first_question)
 {
     Node* nd = Create_node(first_question);
 
@@ -50,7 +50,7 @@ void Print(Node* nd)
     printf(")");
 }
 
-Node* Create_node(char* new_question)
+Node* Create_node(const char* new_question)
 {
     Node* nd = (Node*) calloc(1, sizeof(Node));
 

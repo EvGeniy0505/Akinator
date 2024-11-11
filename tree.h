@@ -5,14 +5,14 @@
 
 struct Node
 {
-    char* data;
-    Node* left;
-    Node* right;
+    const char* data;
+    Node*       left;
+    Node*       right;
 };
 
 Node* Tree_ctor(const char* first_question);
 
-Node* Create_node(char* new_question);
+Node* Create_node(const char* new_question);
 
 // void Insert(Node* nd, char* new_question);
 
@@ -23,8 +23,5 @@ void Dot_dump(Node* nd, int num_graph);
 void Print(Node* nd);
 
 void Tree_dtor(Node* nd);
-
-void akinator(Node* nd);
-
 
 #endif

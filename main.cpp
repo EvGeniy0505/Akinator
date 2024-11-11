@@ -10,7 +10,7 @@ int main()
 
     putchar('\n');
 
-    akinator(nd);
+    akinator(nd, "Это человек?");
 
 
 
