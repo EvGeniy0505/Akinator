@@ -1,35 +1,37 @@
 #include <stdlib.h>
 #include <assert.h>
+#include <string.h>
 
 #include "tree.h"
+#include "user_answer.h"
 
-
-Node* Tree_ctor(int first_tree_val)
+Node* Tree_ctor(char* first_question)
 {
-    Node* nd = Create_node(first_tree_val);
+    Node* nd = Create_node(first_question);
 
     return nd;
 }
 
-void Insert(Node* nd, int new_val)
-{
-    if(!nd)   return;
+// void Insert(Node* nd, char* new_vca)
+// {
+//     if(!nd)   return;
 
-    if(new_val < nd -> data)
-    {
-        Insert(nd -> left, new_val);
+//     if(new_val < nd -> data)
+//     {
+//         Insert(nd -> left, new_val);
 
-        if(nd -> left == NULL)
-            nd -> left = (Node*)Create_node(new_val);
-    }
-    else
-    {
-        Insert(nd -> right, new_val);
+//         if(nd -> left == NULL)
+//             nd -> left = (Node*)Create_node(new_val);
+//     }
+//     else
+//     {
+//         Insert(nd -> right, new_val);
 
-        if(nd -> right == NULL)
-            nd -> right = (Node*)Create_node(new_val);
-    }
-}
+//         if(nd -> right == NULL)
+//             nd -> right = (Node*)Create_node(new_val);
+//     }
+// }
+
 
 void Print(Node* nd)
 {
@@ -40,7 +42,7 @@ void Print(Node* nd)
     if(nd -> left)
         Print(nd -> left);
 
-    printf("%d", nd -> data);
+    printf("%s", nd -> data);
 
     if(nd -> right)
         Print(nd -> right);
@@ -48,22 +50,20 @@ void Print(Node* nd)
     printf(")");
 }
 
-Node* Create_node(int new_val)
+Node* Create_node(char* new_question)
 {
     Node* nd = (Node*) calloc(1, sizeof(Node));
 
-    nd -> data  = new_val;
+    nd -> data  = new_question;
     nd -> left  = NULL;
     nd -> right = NULL;
 
     return nd;
 }
 
-
-
 void Print_tree_to_dot_file(Node* nd, FILE* f_dot)
 {
-    fprintf(f_dot, "\tnode%p[shape=Mrecord, color=purple, label=\" {{<f0> data=%d} | { <l>LEFT | <r>RIGHT}}\"]\n", &nd -> data, nd -> data);
+    fprintf(f_dot, "\tnode%p[shape=Mrecord, color=purple, label=\" {{<f0> data=%s} | { <l>LEFT | <r>RIGHT}}\"]\n", &nd -> data, nd -> data);
 
     if(nd -> left)
     {
