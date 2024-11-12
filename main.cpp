@@ -6,11 +6,9 @@ int main()
 {
     Node* nd = Tree_ctor("Это человек?");
 
-    Print(nd);
+    Dot_dump(nd, 1);
 
-    putchar('\n');
-
-    akinator(nd, "Это человек?");
+    akinator(nd);
 
 
 

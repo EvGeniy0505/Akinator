@@ -63,17 +63,17 @@ Node* Create_node(const char* new_question)
 
 void Print_tree_to_dot_file(Node* nd, FILE* f_dot)
 {
-    fprintf(f_dot, "\tnode%p[shape=Mrecord, color=purple, label=\" {{<f0> data=%s} | { <l>LEFT | <r>RIGHT}}\"]\n", &nd -> data, nd -> data);
+    fprintf(f_dot, "\tnode%p[color=purple, label=\" %s\"]\n", &nd -> data, nd -> data);
 
     if(nd -> left)
     {
-        fprintf(f_dot, "\tnode%p:<l> -> node%p;\n", &nd->data, &nd->left->data);
+        fprintf(f_dot, "\tnode%p:<l> -> node%p[label=\"Да\"];\n", &nd->data, &nd->left->data);
         Print_tree_to_dot_file(nd -> left, f_dot);
     }
 
     if(nd -> right)
     {
-        fprintf(f_dot, "\tnode%p:<r> -> node%p;\n", &nd->data, &nd->right->data);
+        fprintf(f_dot, "\tnode%p:<r> -> node%p[\"Нет\"];\n", &nd->data, &nd->right->data);
         Print_tree_to_dot_file(nd -> right, f_dot);
     }
 }
@@ -89,7 +89,7 @@ void Dot_dump(Node* nd, int num_graph)
 
     fprintf(f_dot, "digraph TREE%d {\n\tbgcolor = \"lightgrey:lightblue\";\n", num_graph);
 
-    fprintf(f_dot, "\tlabel=\"TREE BY Evgeniy Rogov\";\n\tfontsize=30;\n\tfontname=\"Times-Roman\";\n\tlabelloc=\"t\";\n");
+    fprintf(f_dot, "\tlabel=\"Akinator by Evgeniy Rogov\";\n\tfontsize=30;\n\tfontname=\"Times-Roman\";\n\tlabelloc=\"t\";\n");
 
     Print_tree_to_dot_file(nd, f_dot);
 

@@ -1,32 +1,8 @@
 digraph TREE1 {
 	bgcolor = "lightgrey:lightblue";
-	label="TREE BY Evgeniy Rogov";
+	label="Akinator by Evgeniy Rogov";
 	fontsize=30;
 	fontname="Times-Roman";
 	labelloc="t";
-	node0x603000000040[shape=Mrecord, color=purple, label=" {{<f0> data=50} | { <l>LEFT | <r>RIGHT}}"]
-	node0x603000000040:<l> -> node0x603000000070;
-	node0x603000000070[shape=Mrecord, color=purple, label=" {{<f0> data=0} | { <l>LEFT | <r>RIGHT}}"]
-	node0x603000000070:<r> -> node0x6030000000a0;
-	node0x6030000000a0[shape=Mrecord, color=purple, label=" {{<f0> data=11} | { <l>LEFT | <r>RIGHT}}"]
-	node0x6030000000a0:<r> -> node0x6030000000d0;
-	node0x6030000000d0[shape=Mrecord, color=purple, label=" {{<f0> data=22} | { <l>LEFT | <r>RIGHT}}"]
-	node0x6030000000d0:<r> -> node0x603000000100;
-	node0x603000000100[shape=Mrecord, color=purple, label=" {{<f0> data=33} | { <l>LEFT | <r>RIGHT}}"]
-	node0x603000000100:<l> -> node0x603000000280;
-	node0x603000000280[shape=Mrecord, color=purple, label=" {{<f0> data=30} | { <l>LEFT | <r>RIGHT}}"]
-	node0x603000000100:<r> -> node0x603000000130;
-	node0x603000000130[shape=Mrecord, color=purple, label=" {{<f0> data=44} | { <l>LEFT | <r>RIGHT}}"]
-	node0x603000000130:<l> -> node0x603000000250;
-	node0x603000000250[shape=Mrecord, color=purple, label=" {{<f0> data=35} | { <l>LEFT | <r>RIGHT}}"]
-	node0x603000000040:<r> -> node0x603000000160;
-	node0x603000000160[shape=Mrecord, color=purple, label=" {{<f0> data=55} | { <l>LEFT | <r>RIGHT}}"]
-	node0x603000000160:<r> -> node0x603000000190;
-	node0x603000000190[shape=Mrecord, color=purple, label=" {{<f0> data=66} | { <l>LEFT | <r>RIGHT}}"]
-	node0x603000000190:<r> -> node0x6030000001c0;
-	node0x6030000001c0[shape=Mrecord, color=purple, label=" {{<f0> data=77} | { <l>LEFT | <r>RIGHT}}"]
-	node0x6030000001c0:<r> -> node0x6030000001f0;
-	node0x6030000001f0[shape=Mrecord, color=purple, label=" {{<f0> data=88} | { <l>LEFT | <r>RIGHT}}"]
-	node0x6030000001f0:<r> -> node0x603000000220;
-	node0x603000000220[shape=Mrecord, color=purple, label=" {{<f0> data=99} | { <l>LEFT | <r>RIGHT}}"]
+	node0x603000000040[color=purple, label=" Это человек?"]
 }

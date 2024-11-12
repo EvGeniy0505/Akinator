@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <math.h>
+#include <unistd.h>
+#include <stdarg.h>
 
 #include "user_answer.h"
 
@@ -77,5 +79,37 @@ void user_request(char answer[])
     if(answer[i] == '\n')
     {
         answer[i] = '\0';
+    }
+}
+
+void color_printf(FILE* stream, int color, const char* format, ...)
+{
+    va_list args;
+
+    va_start(args, format);
+
+    if(isatty(fileno(stream)) == 1)
+    {
+        fprintf(stream, "\x1B[7;%dm", color);
+
+        vfprintf(stream, format, args);
+
+        fprintf(stream, "\x1B[0;%dm", WHITE);
+    }
+    else
+    {
+        vfprintf(stream, format, args);
+    }
+
+    va_end(args);
+}
+
+void normal_question_check(char* user_answer)
+{
+    while(!check_input_yes(user_answer) &&
+          !check_input_no (user_answer))
+    {
+        printf("Да заебал, введи нормально ответ, да да, нет нет\n");
+        user_request(user_answer);
     }
 }
