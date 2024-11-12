@@ -6,11 +6,12 @@ int main()
 {
     Node* nd = Tree_ctor("Это человек?");
 
-    Dot_dump(nd, 1);
+    nd -> right = Create_node("Стас Зыкин");
+    nd -> left  = Create_node("Полина Новикова");
 
     akinator(nd);
 
-
+    Dot_dump(nd, 1);
 
     Tree_dtor(nd);
 

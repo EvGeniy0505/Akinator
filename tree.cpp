@@ -12,7 +12,7 @@ Node* Tree_ctor(const char* first_question)
     return nd;
 }
 
-// void Insert(Node* nd, char* new_vca)
+// void Insert(Node* nd, char* new_val)
 // {
 //     if(!nd)   return;
 
@@ -61,26 +61,26 @@ Node* Create_node(const char* new_question)
     return nd;
 }
 
-void Print_tree_to_dot_file(Node* nd, FILE* f_dot)
+static void Print_tree_to_dot_file(Node* nd, FILE* f_dot)
 {
     fprintf(f_dot, "\tnode%p[color=purple, label=\" %s\"]\n", &nd -> data, nd -> data);
 
     if(nd -> left)
     {
-        fprintf(f_dot, "\tnode%p:<l> -> node%p[label=\"Да\"];\n", &nd->data, &nd->left->data);
+        fprintf(f_dot, "\tnode%p -> node%p[label=\"Да\", fontcolor=\"red\"];\n", &nd->data, &nd->left->data);
         Print_tree_to_dot_file(nd -> left, f_dot);
     }
 
     if(nd -> right)
     {
-        fprintf(f_dot, "\tnode%p:<r> -> node%p[\"Нет\"];\n", &nd->data, &nd->right->data);
+        fprintf(f_dot, "\tnode%p -> node%p[label=\"Нет\", fontcolor=\"red\"];\n", &nd->data, &nd->right->data);
         Print_tree_to_dot_file(nd -> right, f_dot);
     }
 }
 
 void Dot_dump(Node* nd, int num_graph)
 {
-    FILE* f_dot = fopen("output/tree.dot", "w");
+    FILE* f_dot = fopen("output/akinator.dot", "w");
 
     assert(f_dot);
     assert(nd);
@@ -102,10 +102,10 @@ void Dot_dump(Node* nd, int num_graph)
 
 void Dot_file_compile(int num_pucture)
 {
-    char com1[40] = "dot -Tpng output/tree.dot > output/tree";
+    char com1[48] = "dot -Tpng output/akinator.dot > output/akinator";
     char com2[5]  = ".png";
 
-    char com[47] = "";
+    char com[56] = "";
 
     char num_str[3] = "";
 

@@ -1,8 +1,0 @@
-digraph TREE1 {
-	bgcolor = "lightgrey:lightblue";
-	label="Akinator by Evgeniy Rogov";
-	fontsize=30;
-	fontname="Times-Roman";
-	labelloc="t";
-	node0x603000000040[color=purple, label=" Это человек?"]
-}

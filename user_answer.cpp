@@ -104,7 +104,7 @@ void color_printf(FILE* stream, int color, const char* format, ...)
     va_end(args);
 }
 
-void normal_question_check(char* user_answer)
+void check_answer(char* user_answer)
 {
     while(!check_input_yes(user_answer) &&
           !check_input_no (user_answer))

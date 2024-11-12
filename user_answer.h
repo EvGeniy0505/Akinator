@@ -21,7 +21,7 @@ bool check_input_no(char answer[]);
 
 void user_request(char answer[]);
 
-void normal_question_check(char* user_answer);
+void check_answer(char* user_answer);
 
 int strcasecmp_russ(const char* str_1, const char* str_2);
 
