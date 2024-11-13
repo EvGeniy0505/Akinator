@@ -4,12 +4,19 @@
 
 int main()
 {
-    Node* nd = Tree_ctor("Это человек?");
+    Node* nd = read_questions_from_file();
 
-    nd -> right = Create_node("Стас Зыкин");
-    nd -> left  = Create_node("Полина Новикова");
+    Print(nd);
+
+    // Node* nd = Create_node("Это человек?");
+
+    // nd -> right = Create_node("Стас Зыкин");
+    // nd -> left  = Create_node("Полина Новикова");
+
 
     akinator(nd);
+
+    write_questions_to_file(nd);
 
     Dot_dump(nd, 1);
 

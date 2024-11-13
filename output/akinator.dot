@@ -4,13 +4,13 @@ digraph TREE1 {
 	fontsize=30;
 	fontname="Times-Roman";
 	labelloc="t";
-	node0x603000000040[color=purple, label=" Это человек?"]
-	node0x603000000040 -> node0x6030000000a0[label="Да", fontcolor="red"];
-	node0x6030000000a0[color=purple, label=" fr"]
-	node0x6030000000a0 -> node0x603000000100[label="Да", fontcolor="red"];
-	node0x603000000100[color=purple, label=" fr"]
-	node0x6030000000a0 -> node0x6030000000d0[label="Нет", fontcolor="red"];
-	node0x6030000000d0[color=purple, label=" Полина Новикова"]
-	node0x603000000040 -> node0x603000000070[label="Нет", fontcolor="red"];
-	node0x603000000070[color=purple, label=" Стас Зыкин"]
+	node0x603000000070[color=purple, label=" Это человек?"]
+	node0x603000000070 -> node0x6030000000a0[label="Да", fontcolor="red"];
+	node0x6030000000a0[color=purple, label=" Человек мудак?"]
+	node0x6030000000a0 -> node0x603000000130[label="Да", fontcolor="red"];
+	node0x603000000130[color=purple, label=" Филатов"]
+	node0x6030000000a0 -> node0x603000000100[label="Нет", fontcolor="red"];
+	node0x603000000100[color=purple, label=" Полина"]
+	node0x603000000070 -> node0x6030000000d0[label="Нет", fontcolor="red"];
+	node0x6030000000d0[color=purple, label=" Стас"]
 }

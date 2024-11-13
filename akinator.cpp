@@ -1,5 +1,6 @@
 #include <string.h>
-#include <stdlib.h>
+#include <malloc.h>
+#include <assert.h>
 
 #include "akinator.h"
 
@@ -46,12 +47,12 @@ void check_user_word(Node* nd, char* user_answer)
         color_printf(stdout, PURPLE, "ОАОАОАОА, ЖООООООСКО, да да да??? я крут??? Это ж просто кайфы, что слово совпало\n");
     else
     {
-        const char* past_user_answer = {};
+        char* past_user_answer = {};
         past_user_answer = nd -> data;
 
         printf("Бля, грустно((\nВведи вопрос БЕЗ СЛОВА НЕТ(НЕ), ответом на который является твоё слово\n");
 
-        char user_question[256] = {};
+        char* user_question = (char*) calloc(100, 1);
         user_request(user_question);
         nd -> data = user_question;
 
@@ -65,16 +66,29 @@ void check_user_word(Node* nd, char* user_answer)
     }
 }
 
-// void read_questions_from_file(Node* nd)
-// {
-//     FILE* fp = fopen("akinator.json", "r");
+Node* read_questions_from_file()
+{
+    FILE* f_data = fopen("akinator_data.txt", "r");
 
-//     fscanf(fp, "%s", nd -> data);
+    assert(f_data);
 
-//     fclose(fp);
-// }
+    Node* nd = Tree_ctor(f_data);
 
-// void write_questions_to_file(Node* nd)
-// {
+    fclose(f_data);
 
-// }
+    return nd;
+}
+
+void write_questions_to_file(Node* nd)
+{
+    FILE* f_data = fopen("akinator_data.txt", "w");
+
+    assert(f_data);
+    assert(nd);
+    if(ferror(f_data))
+        fprintf(stderr, "FILE OPEN ERROR!!!\n");
+
+    Print_to_file(nd, f_data);
+
+    fclose(f_data);
+}
