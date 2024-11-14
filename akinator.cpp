@@ -8,21 +8,50 @@
 
 static const int MAX_STR_LEN = 100;
 
-void game(Node* nd)
+static void print_solve_path(Node* nd, int* arr, int num_of_nd, int solve_path);
+static void print_different_path(Node* nd, int* arr, int num_of_nd, int solve_path);
+
+int game(Node* nd)
 {
-    printf("Привет, привет, мэнчик!\nХочешь поиграть в акинатор или найти есть ли слово в базе данных?\n");
-    printf("Введи номер игры:\n1)Поиграть\n2)Найти\n");
+    printf("Привет, привет, мэнчик!\nХочешь поиграть в акинатор, найти есть ли слово в базе данных или сравнить определения двух слов?\n");
+    printf("Введи номер игры:\n1)Поиграть\n2)Найти\n3)Сравнить\n4)Выйти из акинатора\n");
     char user_answ[256] = {};
     user_request(user_answ);
 
-    if(!strcasecmp(user_answ, "Поиграть") || !strcasecmp(user_answ, "1"))
-        akinator(nd);
-    else if(!strcasecmp(user_answ, "Найти") || !strcasecmp(user_answ, "2"))
+    while((strcasecmp(user_answ, "Выйти") || strcasecmp(user_answ, "4")))
     {
-        printf("Заебись, теперь введи слово, которое хочешь найти\n");
+        if(!strcasecmp(user_answ, "Поиграть") || !strcasecmp(user_answ, "1"))
+            akinator(nd);
+        else if(!strcasecmp(user_answ, "Найти") || !strcasecmp(user_answ, "2"))
+        {
+            printf("Заебись, теперь введи слово, которое хочешь найти\n");
+            user_request(user_answ);
+            find_word(nd, user_answ);
+        }
+        else if(!strcasecmp(user_answ, "Сравнить") || !strcasecmp(user_answ, "3"))
+        {
+            printf("Введи два слова для сравнения на каждой строке новое, сука!!!!\n");
+
+            char user_word_1[256] = {};
+            char user_word_2[256] = {};
+
+            user_request(user_word_1);
+            user_request(user_word_2);
+
+            cmp_path_words(nd, user_word_1, user_word_2);
+        }
+        else
+        {
+            color_printf(stdout, RED, "До свидания!\n");
+            return 1;
+        }
+
+        printf("Хочешь еще поразвлекаться со мной?)\nПовторю меню:\n1)Поиграть\n2)Найти\n3)Сравнить\n4)Выйти из акинатора\n");
         user_request(user_answ);
-        find_word(nd, user_answ);
     }
+
+    printf("Пока, пока, дорогой!\n");
+    return 0;
 }
 
 void akinator(Node* nd)
@@ -59,6 +88,83 @@ void akinator(Node* nd)
     write_questions_to_file(nd);
 
     Dot_dump(nd, 1);
+}
+
+void cmp_path_words(Node* nd, const char* word1, const char* word2)
+{
+    int* bin_path1 = (int*) calloc(find_tree_deep(nd, 0), sizeof(int));
+    int* bin_path2 = (int*) calloc(find_tree_deep(nd, 0), sizeof(int));
+
+    path_to_word path1 = find_def_word_in_tree(nd, word1, bin_path1, 0);
+    path_to_word path2 = find_def_word_in_tree(nd, word2, bin_path2, 0);
+
+    int same_position = 0;
+
+    while(bin_path1[same_position] == bin_path2[same_position])
+        ++same_position;
+
+    printf("Same path:\n");
+
+    print_solve_path(nd, path1.path, 0, same_position);
+
+    putchar('\n');
+
+    printf("Differrent path for first str:\n");
+
+    print_different_path(nd, path1.path, 0, same_position);
+
+    putchar('\n');
+
+    printf("Differrent path for second str:\n");
+
+    print_different_path(nd, path2.path, 0, same_position);
+
+    putchar('\n');
+
+    free(bin_path1);
+    free(bin_path2);
+}
+
+static void print_different_path(Node* nd, int* arr, int num_of_nd, int different_path)
+{
+    if(!nd -> left)
+        return;
+
+    if(arr[num_of_nd] == 0)
+    {
+        if(different_path <= num_of_nd)
+            print_def(nd);
+
+        print_different_path(nd -> left, arr, num_of_nd + 1, different_path);
+    }
+    if(arr[num_of_nd] == 1)
+    {
+        if(different_path <= num_of_nd)
+            print_no_def(nd);
+
+        print_different_path(nd -> right, arr, num_of_nd + 1, different_path);
+    }
+}
+
+static void print_solve_path(Node* nd, int* arr, int num_of_nd, int solve_path)
+{
+    if(!nd -> left)
+        return;
+
+    if(arr[num_of_nd] == 0)
+    {
+        if(solve_path > num_of_nd)
+            print_def(nd);
+
+        print_solve_path(nd -> left, arr, num_of_nd + 1, solve_path);
+    }
+    if(arr[num_of_nd] == 1)
+    {
+        if(solve_path > num_of_nd)
+            print_no_def(nd);
+
+        print_solve_path(nd -> right, arr, num_of_nd + 1, solve_path);
+    }
 }
 
 void find_word(Node* nd, const char* word)

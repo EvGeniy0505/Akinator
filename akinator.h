@@ -13,7 +13,9 @@ void check_user_word(Node* nd, char* user_answer);
 
 void find_word(Node* nd, const char* word);
 
-void game(Node* nd);
+void cmp_path_words(Node* nd, const char* word1, const char* word2);
+
+int game(Node* nd);
 
 void print_def(Node* nd);
 
