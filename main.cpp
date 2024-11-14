@@ -8,7 +8,7 @@
 
 int main()
 {
-    Node* nd = read_questions_from_file();
+    Node* nd = read_questions_from_file_to_tree();
 
     game(nd);
 

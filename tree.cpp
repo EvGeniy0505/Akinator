@@ -86,7 +86,11 @@ int find_tree_deep(Node* nd, int start_deep)
 
 static void Print_tree_to_dot_file(Node* nd, FILE* f_dot)
 {
-    fprintf(f_dot, "\tnode%p[color=purple, label=\" %s\"]\n", &nd -> data, nd -> data);
+    if(!nd -> left && !nd -> right)
+        fprintf(f_dot, "\tnode%p[color=purple, label=\" %s\"]\n", &nd -> data, nd -> data);
+    else
+        fprintf(f_dot, "\tnode%p[color=purple, label=\" %s?\"]\n", &nd -> data, nd -> data);
+
 
     if(nd -> left)
     {

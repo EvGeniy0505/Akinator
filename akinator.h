@@ -15,6 +15,10 @@ void find_word(Node* nd, const char* word);
 
 void game(Node* nd);
 
+void print_def(Node* nd);
+
+void print_no_def(Node* nd);
+
 path_to_word find_def_word_in_tree(Node* nd, const char* str, int* arr, int num_of_nd);
 
 void print_path(Node* nd, int* arr, int num_of_nd);

@@ -4,33 +4,49 @@ digraph TREE1 {
 	fontsize=30;
 	fontname="Times-Roman";
 	labelloc="t";
-	node0x603000000040[color=purple, label=" Это живой человек?"]
-	node0x603000000040 -> node0x6030000000a0[label="Да", fontcolor="red"];
-	node0x6030000000a0[color=purple, label=" Он мудак?"]
+	node0x603000000070[color=purple, label=" Живой человек?"]
+	node0x603000000070 -> node0x6030000000a0[label="Да", fontcolor="red"];
+	node0x6030000000a0[color=purple, label=" Мудак?"]
 	node0x6030000000a0 -> node0x603000000100[label="Да", fontcolor="red"];
-	node0x603000000100[color=purple, label=" Преподает линал"]
+	node0x603000000100[color=purple, label=" Преподает линал?"]
 	node0x603000000100 -> node0x603000000130[label="Да", fontcolor="red"];
 	node0x603000000130[color=purple, label=" Умнов"]
 	node0x603000000100 -> node0x603000000160[label="Нет", fontcolor="red"];
-	node0x603000000160[color=purple, label=" Филатов"]
-	node0x6030000000a0 -> node0x603000000190[label="Нет", fontcolor="red"];
-	node0x603000000190[color=purple, label=" Он из вселенной Marvel?"]
-	node0x603000000190 -> node0x6030000001c0[label="Да", fontcolor="red"];
-	node0x6030000001c0[color=purple, label=" Он зеленый?"]
-	node0x6030000001c0 -> node0x603000000400[label="Да", fontcolor="red"];
-	node0x603000000400[color=purple, label=" Халк"]
-	node0x6030000001c0 -> node0x6030000003d0[label="Нет", fontcolor="red"];
-	node0x6030000003d0[color=purple, label=" Железный человек(Тони Старк)"]
-	node0x603000000190 -> node0x6030000001f0[label="Нет", fontcolor="red"];
-	node0x6030000001f0[color=purple, label=" Полина"]
-	node0x603000000040 -> node0x603000000250[label="Нет", fontcolor="red"];
-	node0x603000000250[color=purple, label=" Это предмет?"]
-	node0x603000000250 -> node0x603000000280[label="Да", fontcolor="red"];
-	node0x603000000280[color=purple, label=" Хуй"]
-	node0x603000000250 -> node0x6030000002e0[label="Нет", fontcolor="red"];
-	node0x6030000002e0[color=purple, label=" Это любит Эдик?"]
-	node0x6030000002e0 -> node0x603000000340[label="Да", fontcolor="red"];
-	node0x603000000340[color=purple, label=" Сосать хуи"]
-	node0x6030000002e0 -> node0x6030000003a0[label="Нет", fontcolor="red"];
-	node0x6030000003a0[color=purple, label=" Полторашка"]
+	node0x603000000160[color=purple, label=" Преподает матан?"]
+	node0x603000000160 -> node0x6030000005b0[label="Да", fontcolor="red"];
+	node0x6030000005b0[color=purple, label=" Кондрашов"]
+	node0x603000000160 -> node0x603000000580[label="Нет", fontcolor="red"];
+	node0x603000000580[color=purple, label=" Филатов"]
+	node0x6030000000a0 -> node0x6030000001c0[label="Нет", fontcolor="red"];
+	node0x6030000001c0[color=purple, label=" Из вселенной Marvel?"]
+	node0x6030000001c0 -> node0x6030000001f0[label="Да", fontcolor="red"];
+	node0x6030000001f0[color=purple, label=" Зеленый?"]
+	node0x6030000001f0 -> node0x603000000220[label="Да", fontcolor="red"];
+	node0x603000000220[color=purple, label=" Халк"]
+	node0x6030000001f0 -> node0x603000000250[label="Нет", fontcolor="red"];
+	node0x603000000250[color=purple, label=" Железный человек(Тони Старк)"]
+	node0x6030000001c0 -> node0x603000000280[label="Нет", fontcolor="red"];
+	node0x603000000280[color=purple, label=" Закрыл(а) курс деда?"]
+	node0x603000000280 -> node0x6030000002b0[label="Да", fontcolor="red"];
+	node0x6030000002b0[color=purple, label=" Миша "]
+	node0x603000000280 -> node0x6030000002e0[label="Нет", fontcolor="red"];
+	node0x6030000002e0[color=purple, label=" Полина"]
+	node0x603000000070 -> node0x603000000310[label="Нет", fontcolor="red"];
+	node0x603000000310[color=purple, label=" Предмет?"]
+	node0x603000000310 -> node0x603000000340[label="Да", fontcolor="red"];
+	node0x603000000340[color=purple, label=" Очень большой предмет?"]
+	node0x603000000340 -> node0x603000000370[label="Да", fontcolor="red"];
+	node0x603000000370[color=purple, label=" Дом"]
+	node0x603000000340 -> node0x6030000003d0[label="Нет", fontcolor="red"];
+	node0x6030000003d0[color=purple, label=" Стоит всегда?"]
+	node0x6030000003d0 -> node0x603000000400[label="Да", fontcolor="red"];
+	node0x603000000400[color=purple, label=" Фонарь"]
+	node0x6030000003d0 -> node0x603000000430[label="Нет", fontcolor="red"];
+	node0x603000000430[color=purple, label=" Хуй"]
+	node0x603000000310 -> node0x603000000490[label="Нет", fontcolor="red"];
+	node0x603000000490[color=purple, label=" Любит Эдик?"]
+	node0x603000000490 -> node0x6030000004f0[label="Да", fontcolor="red"];
+	node0x6030000004f0[color=purple, label=" Сосать хуи"]
+	node0x603000000490 -> node0x603000000550[label="Нет", fontcolor="red"];
+	node0x603000000550[color=purple, label=" Полторашка"]
 }

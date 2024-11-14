@@ -14,7 +14,7 @@ struct str_params
 static str_params read_str_from_buff(char* buff);
 static void from_buff_to_tree(Node** nd, char** buff);
 
-Node* read_questions_from_file()
+Node* read_questions_from_file_to_tree()
 {
     FILE* f_data = fopen("akinator_data.txt", "r");
 

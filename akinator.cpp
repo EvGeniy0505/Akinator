@@ -1,6 +1,7 @@
 #include <string.h>
 #include <malloc.h>
 #include <assert.h>
+#include <ctype.h>
 
 #include "akinator.h"
 #include "file_read_and_write.h"
@@ -10,13 +11,13 @@ static const int MAX_STR_LEN = 100;
 void game(Node* nd)
 {
     printf("Привет, привет, мэнчик!\nХочешь поиграть в акинатор или найти есть ли слово в базе данных?\n");
-    printf("Введи ключевое слово:\n1)Поиграть\n2)Найти\n");
+    printf("Введи номер игры:\n1)Поиграть\n2)Найти\n");
     char user_answ[256] = {};
     user_request(user_answ);
 
-    if(!strcasecmp(user_answ, "Поиграть"))
+    if(!strcasecmp(user_answ, "Поиграть") || !strcasecmp(user_answ, "1"))
         akinator(nd);
-    else if(!strcasecmp(user_answ, "Найти"))
+    else if(!strcasecmp(user_answ, "Найти") || !strcasecmp(user_answ, "2"))
     {
         printf("Заебись, теперь введи слово, которое хочешь найти\n");
         user_request(user_answ);
@@ -33,7 +34,7 @@ void akinator(Node* nd)
 
     if(nd -> left && nd -> right)
     {
-        printf("%s\n", nd -> data);
+        printf("%s?\n", nd -> data);
         user_request(user_answer);
         check_answer(user_answer);
     }
@@ -92,10 +93,11 @@ void check_user_word(Node* nd, char* user_answer)
         char* past_user_answer = {};
         past_user_answer = nd -> data;
 
-        printf("Бля, грустно((\nВведи вопрос БЕЗ СЛОВА НЕТ(НЕ), ответом на который является твоё слово\n");
+        printf("Бля, грустно((\nВведи определение загаданного слова БЕЗ СЛОВА НЕТ(НЕ)\n");
 
         char* user_question = (char*) calloc(MAX_STR_LEN, 1);
         user_request(user_question);
+
         nd -> data = user_question;
 
         nd -> right = Create_node(past_user_answer);
@@ -144,14 +146,24 @@ void print_path(Node* nd, int* arr, int num_of_nd)
 
     if(arr[num_of_nd] == 0)
     {
-        printf("%s ", nd -> data);
+        print_def(nd);
 
         print_path(nd -> left, arr, num_of_nd + 1);
     }
     if(arr[num_of_nd] == 1)
     {
-        printf("Не %s ", nd -> data);
+        print_no_def(nd);
 
         print_path(nd -> right, arr, num_of_nd + 1);
     }
+}
+
+void print_no_def(Node* nd)
+{
+    printf("НЕ %s ", nd -> data);
+}
+
+void print_def(Node* nd)
+{
+    printf("%s ", nd -> data);
 }
