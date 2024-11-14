@@ -1,111 +1,18 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#include <sys/stat.h>
 
 #include "tree.h"
 #include "user_answer.h"
-
-static const int MAX_STR_LEN = 100;
-
-struct str_params
-{
-    char* str;
-    size_t len;
-};
-
-static str_params read_str_from_buff(char* buff);
-static void from_buff_to_tree(Node** nd, char** buff);
-static void from_file_to_tree(FILE* file, Node** nd);
+#include "file_read_and_write.h"
 
 Node* Tree_ctor(FILE* file)
 {
     Node* nd = {};
 
     from_file_to_tree(file, &nd);
-    // fprintf(stderr, "nad = %p\n", nd);
-    // Print(nd);
 
     return nd;
-}
-
-size_t count_symbls(FILE* all_file)
-{
-    assert(all_file);
-
-    struct stat st;
-
-    fstat(fileno(all_file), &st);
-
-    return (size_t)st.st_size;
-}
-
-static void from_file_to_tree(FILE* file, Node** nd)
-{
-    size_t len_file = count_symbls(file);
-
-    char* akinator_data = (char*) calloc(len_file, 1);
-
-    fread(akinator_data, 1, len_file, file);
-
-    char* buff = akinator_data;
-    from_buff_to_tree(nd, &buff);
-
-    free(akinator_data);
-}
-
-int a = 0;
-
-static void from_buff_to_tree(Node** nd, char** buff)
-{
-    *buff += 2;  // проходим [ + кавычки
-
-    str_params question = read_str_from_buff(*buff);
-
-    *nd = Create_node(question.str);
-
-    *buff += question.len + 1;  // строка плюс кавычки
-
-    fprintf(stderr, "level = %d\n", a);
-    fprintf(stderr, "nd = %p\n", nd);
-    fprintf(stderr, "%s\n", question.str);
-    fprintf(stderr, "%c\n", **buff);
-
-    if(**buff == '[')
-    {
-        ++a;
-        from_buff_to_tree(&((*nd) -> left), buff);
-    }
-
-    if(**buff == '[')
-    {
-        ++a;
-        from_buff_to_tree(&((*nd) -> right), buff);
-    }
-
-    if(**buff == ']')
-    {
-        ++(*buff);
-        --a;
-        return;
-    }
-}
-
-static str_params read_str_from_buff(char* buff)
-{
-    size_t i = 0; // TODO: rename
-
-    while(buff[i] != '\"') // TODO: std funct
-        ++i;
-
-    char* str = (char*) calloc(i + 1, 1);
-
-    for(size_t j = 0; j < i; j++) // TODO: std functions
-    {
-        str[j] = buff[j];
-    }
-
-    return {str, i};
 }
 
 // void Insert(Node* nd, char* new_val)
@@ -143,23 +50,6 @@ void Print(Node* nd)
         Print_to_file(nd -> right, stdout);
 
     printf("]\n");
-}
-
-void Print_to_file(Node* nd, FILE* file)
-{
-    if(!nd)   return;
-
-    putc('[', file);
-
-    fprintf(file, "\"%s\"", nd -> data);
-
-    if(nd -> left)
-        Print_to_file(nd -> left, file);
-
-    if(nd -> right)
-        Print_to_file(nd -> right, file);
-
-    putc(']', file);
 }
 
 Node* Create_node(char* new_question)

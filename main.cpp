@@ -1,18 +1,13 @@
 #include "tree.h"
 #include "user_answer.h"
 #include "akinator.h"
+#include "file_read_and_write.h"
 
 int main()
 {
     Node* nd = read_questions_from_file();
 
-    Print(nd);
-
-    // Node* nd = Create_node("Это человек?");
-
-    // nd -> right = Create_node("Стас Зыкин");
-    // nd -> left  = Create_node("Полина Новикова");
-
+    // Print(nd);
 
     akinator(nd);
 
