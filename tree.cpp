@@ -62,6 +62,27 @@ Node* Create_node(char* new_question)
 
     return nd;
 }
+int max_deep = 0;
+int find_tree_deep(Node* nd, int start_deep)
+{
+    if(!nd -> left && !nd -> right)
+    {
+        if(start_deep > max_deep)
+            max_deep = start_deep;
+        return 0;
+    }
+
+    if(nd -> left)
+    {
+        find_tree_deep(nd -> left, start_deep + 1);
+    }
+    if(nd -> right)
+    {
+        find_tree_deep(nd -> right, start_deep + 1);
+    }
+
+    return max_deep;
+}
 
 static void Print_tree_to_dot_file(Node* nd, FILE* f_dot)
 {

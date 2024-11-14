@@ -1,3 +1,6 @@
+#include <malloc.h>
+#include <string.h>
+
 #include "tree.h"
 #include "user_answer.h"
 #include "akinator.h"
@@ -7,14 +10,7 @@ int main()
 {
     Node* nd = read_questions_from_file();
 
-    // akinator(nd);
-
-    if(!find_def_word_in_tree(nd, "Полторашка"))
-        color_printf(stdout, RED, "У тебя нет прав на это слово, это полный пиздец\n");
-
-    write_questions_to_file(nd);
-
-    Dot_dump(nd, 1);
+    game(nd);
 
     Tree_dtor(nd);
 

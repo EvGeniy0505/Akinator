@@ -68,10 +68,13 @@ static void from_buff_to_tree(Node** nd, char** buff)
     // fprintf(stderr, "%c\n", **buff);
 
     if(**buff == '[')
+    {
         from_buff_to_tree(&((*nd) -> left), buff);
-
+    }
     if(**buff == '[')
+    {
         from_buff_to_tree(&((*nd) -> right), buff);
+    }
 
     if(**buff == ']')
     {

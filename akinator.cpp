@@ -3,8 +3,26 @@
 #include <assert.h>
 
 #include "akinator.h"
+#include "file_read_and_write.h"
 
 static const int MAX_STR_LEN = 100;
+
+void game(Node* nd)
+{
+    printf("Привет, привет, мэнчик!\nХочешь поиграть в акинатор или найти есть ли слово в базе данных?\n");
+    printf("Введи ключевое слово:\n1)Поиграть\n2)Найти\n");
+    char user_answ[256] = {};
+    user_request(user_answ);
+
+    if(!strcasecmp(user_answ, "Поиграть"))
+        akinator(nd);
+    else if(!strcasecmp(user_answ, "Найти"))
+    {
+        printf("Заебись, теперь введи слово, которое хочешь найти\n");
+        user_request(user_answ);
+        find_word(nd, user_answ);
+    }
+}
 
 void akinator(Node* nd)
 {
@@ -36,6 +54,27 @@ void akinator(Node* nd)
             check_user_word(nd, user_answer);
         }
     }
+
+    write_questions_to_file(nd);
+
+    Dot_dump(nd, 1);
+}
+
+void find_word(Node* nd, const char* word)
+{
+    int* bin_path = (int*) calloc(find_tree_deep(nd, 0), sizeof(int));
+
+    path_to_word path = find_def_word_in_tree(nd, word, bin_path, 0);
+
+    if(!path.is_there_path)
+        color_printf(stdout, RED, "У тебя нет прав на это слово, это полный пиздец\n");
+    else
+    {
+        print_path(nd, path.path, 0);
+        putchar('\n');
+    }
+
+    free(bin_path);
 }
 
 void check_user_word(Node* nd, char* user_answer)
@@ -70,61 +109,49 @@ void check_user_word(Node* nd, char* user_answer)
     }
 }
 
-int i = 0;
-
-bool find_def_word_in_tree(Node* nd, const char* str)
+path_to_word find_def_word_in_tree(Node* nd, const char* str, int* arr, int num_of_nd)
 {
-    // int arr[256] = {};
-
     if(!strcasecmp(str, nd -> data))
     {
-        // print_path(nd, arr, i);
-        printf("str = %s\n", nd -> data);
-        return true;
+        return {arr, true};
     }
 
     if(nd -> left)
     {
-        // arr[i] = 0;
-        // ++i;
-        // printf("%d ", arr[i]);
-        if(find_def_word_in_tree(nd -> left, str))
-        {
-            printf("str = %s\n", nd -> data);
-            return true;
-        }
+        arr[num_of_nd] = 0;
+
+        path_to_word path = find_def_word_in_tree(nd -> left, str, arr, num_of_nd + 1);
+
+        if(path.is_there_path)
+            return {arr, true};
     }
     if(nd -> right)
     {
-        // arr[i] = 1;
-        // ++i;
-        // printf("%d ", arr[i]);
-        if(find_def_word_in_tree(nd -> right, str))
-        {
-            printf("str = %s\n", nd -> data);
-            return true;
-        }
+        arr[num_of_nd] = 1;
+
+        path_to_word path = find_def_word_in_tree(nd -> right, str, arr, num_of_nd + 1);
+
+        if(path.is_there_path)
+            return {arr, true};
     }
-    return false;
+    return {arr, false};
 }
 
-// void print_path(Node* nd, int* arr, int i)
-// {
-//     printf("%d\n", i);
-//     for(int j = 0; j < i; j++)
-//     {
-//         switch(arr[j + 1])
-//         {
-//            case 0:
-//                 printf("%s\n", nd -> data);
-//                 nd -> left = nd;
-//             case 1:
-//                 printf("%s\n", nd -> data);
-//                 nd -> right = nd;
-//             default:
-//                 printf("хуй\n");
+void print_path(Node* nd, int* arr, int num_of_nd)
+{
+    if(!nd -> left)
+        return;
 
+    if(arr[num_of_nd] == 0)
+    {
+        printf("%s ", nd -> data);
 
-//         }
-//     }
-// }
+        print_path(nd -> left, arr, num_of_nd + 1);
+    }
+    if(arr[num_of_nd] == 1)
+    {
+        printf("Не %s ", nd -> data);
+
+        print_path(nd -> right, arr, num_of_nd + 1);
+    }
+}

@@ -18,6 +18,8 @@ Node* Create_node(char* new_question);
 
 void Dot_file_compile(int num_pucture);
 
+int find_tree_deep(Node* nd, int start_deep);
+
 void Dot_dump(Node* nd, int num_graph);
 
 void Print_to_file(Node* nd, FILE* file);
