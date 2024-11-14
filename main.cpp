@@ -7,9 +7,10 @@ int main()
 {
     Node* nd = read_questions_from_file();
 
-    // Print(nd);
+    // akinator(nd);
 
-    akinator(nd);
+    if(!find_def_word_in_tree(nd, "Полторашка"))
+        color_printf(stdout, RED, "У тебя нет прав на это слово, это полный пиздец\n");
 
     write_questions_to_file(nd);
 

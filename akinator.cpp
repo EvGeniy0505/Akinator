@@ -8,7 +8,8 @@ static const int MAX_STR_LEN = 100;
 
 void akinator(Node* nd)
 {
-    if(!nd)     return;
+    if(!nd)
+        return;
 
     char user_answer[256] = {};
 
@@ -68,3 +69,62 @@ void check_user_word(Node* nd, char* user_answer)
         color_printf(stdout, RED, "Заебись! Теперь ваш вариант есть в базе данных!\n");
     }
 }
+
+int i = 0;
+
+bool find_def_word_in_tree(Node* nd, const char* str)
+{
+    // int arr[256] = {};
+
+    if(!strcasecmp(str, nd -> data))
+    {
+        // print_path(nd, arr, i);
+        printf("str = %s\n", nd -> data);
+        return true;
+    }
+
+    if(nd -> left)
+    {
+        // arr[i] = 0;
+        // ++i;
+        // printf("%d ", arr[i]);
+        if(find_def_word_in_tree(nd -> left, str))
+        {
+            printf("str = %s\n", nd -> data);
+            return true;
+        }
+    }
+    if(nd -> right)
+    {
+        // arr[i] = 1;
+        // ++i;
+        // printf("%d ", arr[i]);
+        if(find_def_word_in_tree(nd -> right, str))
+        {
+            printf("str = %s\n", nd -> data);
+            return true;
+        }
+    }
+    return false;
+}
+
+// void print_path(Node* nd, int* arr, int i)
+// {
+//     printf("%d\n", i);
+//     for(int j = 0; j < i; j++)
+//     {
+//         switch(arr[j + 1])
+//         {
+//            case 0:
+//                 printf("%s\n", nd -> data);
+//                 nd -> left = nd;
+//             case 1:
+//                 printf("%s\n", nd -> data);
+//                 nd -> right = nd;
+//             default:
+//                 printf("хуй\n");
+
+
+//         }
+//     }
+// }
