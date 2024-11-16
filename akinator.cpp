@@ -30,7 +30,7 @@ int game(Node* nd)
         }
         else if(!strcasecmp(user_answ, "Сравнить") || !strcasecmp(user_answ, "3"))
         {
-            printf("Введи два слова для сравнения на каждой строке новое, сука!!!!\n");
+            printf("Введи два слова для сравнения, на каждой строке новое, сука!!!!\n");
 
             char user_word_1[256] = {};
             char user_word_2[256] = {};
@@ -40,9 +40,14 @@ int game(Node* nd)
 
             cmp_path_words(nd, user_word_1, user_word_2);
         }
+        else if(!strcasecmp(user_answ, "Выйти") || !strcasecmp(user_answ, "4"))
+        {
+            color_printf(stdout, RED, "До свидания!\nПока, пока, дорогой!\n");
+            return 0;
+        }
         else
         {
-            color_printf(stdout, RED, "До свидания!\n");
+            color_printf(stdout, RED, "Чел, ты ввел хуйню, в следующий раз будь внимательнее!!!!\n");
             return 1;
         }
 
@@ -50,7 +55,6 @@ int game(Node* nd)
         user_request(user_answ);
     }
 
-    printf("Пока, пока, дорогой!\n");
     return 0;
 }
 
@@ -100,26 +104,35 @@ void cmp_path_words(Node* nd, const char* word1, const char* word2)
 
     int same_position = 0;
 
-    while(bin_path1[same_position] == bin_path2[same_position])
-        ++same_position;
+    if(path1.is_there_path && path2.is_there_path)
+    {
+        while(bin_path1[same_position] == bin_path2[same_position])
+            ++same_position;
 
-    printf("Same path:\n");
+        color_printf(stdout, PURPLE, "Same path:\n");
 
-    print_solve_path(nd, path1.path, 0, same_position);
+        print_solve_path(nd, path1.path, 0, same_position);
 
-    putchar('\n');
+        putchar('\n');
 
-    printf("Differrent path for first str:\n");
+        color_printf(stdout, YELLOW, "Differrent path for first str:\n");
 
-    print_different_path(nd, path1.path, 0, same_position);
+        print_different_path(nd, path1.path, 0, same_position);
 
-    putchar('\n');
+        putchar('\n');
 
-    printf("Differrent path for second str:\n");
+        color_printf(stdout, YELLOW, "Differrent path for second str:\n");
 
-    print_different_path(nd, path2.path, 0, same_position);
+        print_different_path(nd, path2.path, 0, same_position);
 
-    putchar('\n');
+        putchar('\n');
+    }
+    else if(!path1.is_there_path && !path2.is_there_path)
+        color_printf(stdout, RED, "Обоих строк не существует, проверь себя\n");
+    else if(path1.is_there_path)
+        color_printf(stdout, RED, "Второй строки не существует, проверь себя\n");
+    else
+        color_printf(stdout, RED, "Первой строки не существует, проверь себя\n");
 
     free(bin_path1);
     free(bin_path2);
@@ -266,10 +279,10 @@ void print_path(Node* nd, int* arr, int num_of_nd)
 
 void print_no_def(Node* nd)
 {
-    printf("НЕ %s ", nd -> data);
+    color_printf(stdout, GREEN, "НЕ %s ", nd -> data);
 }
 
 void print_def(Node* nd)
 {
-    printf("%s ", nd -> data);
+    color_printf(stdout, GREEN, "%s ", nd -> data);
 }
