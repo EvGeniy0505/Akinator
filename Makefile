@@ -1,29 +1,46 @@
-DEPENDENCIES = $(wildcard *.d)
+CXX = g++
 
-.PHONY: akinator clean		#исключаем файлы akinator, clean
+FLAGS = -MMD -D _DEBUG -ggdb3 -std=c++17 -O0 -Wall -Wextra -Weffc++ -Waggressive-loop-optimizations -Wc++14-compat -Wmissing-declarations            \
+-Wcast-align -Wcast-qual -Wchar-subscripts -Wconditionally-supported -Wconversion -Wctor-dtor-privacy -Wempty-body -Wfloat-equal			         \
+-Wformat-nonliteral -Wformat-security -Wformat-signedness -Wformat=2 -Winline -Wlogical-op -Wnon-virtual-dtor -Wopenmp-simd -Woverloaded-virtual     \
+-Wpacked -Wpointer-arith -Winit-self -Wredundant-decls -Wshadow -Wsign-promo -Wstrict-null-sentinel -Wstrict-overflow=2 -Wsuggest-attribute=noreturn \
+-Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wswitch-default -Wswitch-enum -Wsync-nand -Wundef -Wunreachable-code 			     \
+-Wunused -Wuseless-cast -Wvariadic-macros -Wno-literal-suffix -Wno-missing-field-initializers -Wno-narrowing -Wno-old-style-cast -Wno-varargs        \
+-Wstack-protector -fcheck-new -fsized-deallocation -fstack-protector -fstrict-overflow -flto-odr-type-merging -fno-omit-frame-pointer 			     \
+-Wlarger-than=327678 -Wstack-usage=8192 -pie -fPIE -Werror=vla 																					     \
+-fsanitize=address,alignment,bool,bounds,enum,float-cast-overflow,float-divide-by-zero,integer-divide-by-zero,leak,nonnull-attribute,null,object-size,return,returns-nonnull-attribute,shift,signed-integer-overflow,undefined,unreachable,vla-bound,vptr
 
-flags = -MMD -D _DEBUG -ggdb3 -std=c++17 -O0 -Wall -Wextra -Weffc++ -Waggressive-loop-optimizations -Wc++14-compat -Wmissing-declarations -Wcast-align -Wcast-qual -Wchar-subscripts -Wconditionally-supported -Wconversion -Wctor-dtor-privacy -Wempty-body -Wfloat-equal -Wformat-nonliteral -Wformat-security -Wformat-signedness -Wformat=2 -Winline -Wlogical-op -Wnon-virtual-dtor -Wopenmp-simd -Woverloaded-virtual -Wpacked -Wpointer-arith -Winit-self -Wredundant-decls -Wshadow -Wsign-promo -Wstrict-null-sentinel -Wstrict-overflow=2 -Wsuggest-attribute=noreturn -Wsuggest-final-methods -Wsuggest-final-types -Wsuggest-override -Wswitch-default -Wswitch-enum -Wsync-nand -Wundef -Wunreachable-code -Wunused -Wuseless-cast -Wvariadic-macros -Wno-literal-suffix -Wno-missing-field-initializers -Wno-narrowing -Wno-old-style-cast -Wno-varargs -Wstack-protector -fcheck-new -fsized-deallocation -fstack-protector -fstrict-overflow -flto-odr-type-merging -fno-omit-frame-pointer -Wlarger-than=327678 -Wstack-usage=8192 -pie -fPIE -Werror=vla -fsanitize=address,alignment,bool,bounds,enum,float-cast-overflow,float-divide-by-zero,integer-divide-by-zero,leak,nonnull-attribute,null,object-size,return,returns-nonnull-attribute,shift,signed-integer-overflow,undefined,unreachable,vla-bound,vptr
+SRC_DIR = src
+INC_DIR = inc
+OBJ_DIR = obj
+DEP_DIR = dep
 
-akinator: tree.o akinator.o user_answer.o main.o file_read_and_write.o
-	@g++ $(flags) tree.o akinator.o user_answer.o file_read_and_write.o main.o -o akinator
+EXEC 	= akinator
 
+SRC = $(wildcard $(SRC_DIR)/*.cpp)
+OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+DEP = $(SRC:$(SRC_DIR)/%.cpp=$(DEP_DIR)/%.d)
 
-main.o: main.cpp
-	@g++ -c main.cpp $(flags)
+.PHONY: build
+build: $(EXEC)
 
-tree.o: tree.cpp
-	@g++ -c tree.cpp $(flags)
+$(EXEC): $(OBJ)
+	@$(CXX) $(FLAGS) $(OBJ) -o $(EXEC)
 
-akinator.o: akinator.cpp
-	@g++ -c akinator.cpp $(flags)
+$(OBJ): $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp | $(OBJ_DIR) $(DEP_DIR)
+	@$(CXX) -I $(INC_DIR) -o $@ -c $< $(FLAGS)
 
-user_answer.o: user_answer.cpp
-	@g++ -c user_answer.cpp $(flags)
+$(OBJ_DIR):
+	mkdir $(OBJ_DIR)
 
-file_read_and_write.o: file_read_and_write.cpp
-	@g++ -c file_read_and_write.cpp $(flags)
+$(DEP_DIR):
+	mkdir $(DEP_DIR)
 
+.PHONY: run
+run:
+	./$(EXEC)
+
+.PHONY: clean
 clean:
-	rm -f *.o akinator *.d
+	rm -fr $(OBJ_DIR) akinator $(DEP_DIR)
 
--include $(DEPENDENCIES)

@@ -1,4 +1,4 @@
 .vscode/
-*.d
-*.o
 akinator
+/obj
+/dep
