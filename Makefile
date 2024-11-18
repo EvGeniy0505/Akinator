@@ -10,16 +10,17 @@ FLAGS = -MMD -D _DEBUG -ggdb3 -std=c++17 -O0 -Wall -Wextra -Weffc++ -Waggressive
 -Wlarger-than=327678 -Wstack-usage=8192 -pie -fPIE -Werror=vla 																					     \
 -fsanitize=address,alignment,bool,bounds,enum,float-cast-overflow,float-divide-by-zero,integer-divide-by-zero,leak,nonnull-attribute,null,object-size,return,returns-nonnull-attribute,shift,signed-integer-overflow,undefined,unreachable,vla-bound,vptr
 
-SRC_DIR = src
-INC_DIR = inc
-OBJ_DIR = obj
-DEP_DIR = dep
+SRC_DIR  = src
+INC_DIR  = inc
+OBJ_DIR  = obj
+DEP_DIR  = dep
 
-EXEC 	= akinator
+TEMP_DIR = $(OBJ_DIR) $(DEP_DIR)
+
+EXEC 	 = akinator
 
 SRC = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
-DEP = $(SRC:$(SRC_DIR)/%.cpp=$(DEP_DIR)/%.d)
 
 .PHONY: build
 build: $(EXEC)
@@ -27,20 +28,20 @@ build: $(EXEC)
 $(EXEC): $(OBJ)
 	@$(CXX) $(FLAGS) $(OBJ) -o $(EXEC)
 
-$(OBJ): $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp | $(OBJ_DIR) $(DEP_DIR)
-	@$(CXX) -I $(INC_DIR) -o $@ -c $< $(FLAGS)
+$(OBJ): DEP = $(patsubst $(OBJ_DIR)/%.o, $(DEP_DIR)/%.d, $@)
 
-$(OBJ_DIR):
-	mkdir $(OBJ_DIR)
+$(OBJ): $(OBJ_DIR)/%.o : $(SRC_DIR)/%.cpp | $(TEMP_DIR)
+	@$(CXX) -I $(INC_DIR) -MF $(DEP) -o $@ -c $< $(FLAGS)
 
-$(DEP_DIR):
-	mkdir $(DEP_DIR)
+$(TEMP_DIR):
+	@mkdir -p $@
 
 .PHONY: run
 run:
-	./$(EXEC)
+	@./$(EXEC)
 
 .PHONY: clean
 clean:
 	rm -fr $(OBJ_DIR) akinator $(DEP_DIR)
 
+-include $(DEP)/*.d
